@@ -17,9 +17,13 @@ class Default_controller extends Loadview {
 	//note: password tidak diambil
 	//parameter 1: true bila ingin return array, kosongi bila ingin Json
 	public function get_all_admin($return_var = NULL){
-		$data = $this->Default_model->get_data_admin_nopassword();
+		$data = $this->Default_model->get_data_admin();
 		if (empty($data)){
 			$data = [];
+		}else{
+			foreach ($data as &$row){
+				unset($row['password']);
+			}
 		}
 		if ($return_var == true) {
 			return $data;
@@ -33,9 +37,14 @@ class Default_controller extends Loadview {
 	//parameter 1: username
 	//parameter 1: true bila ingin return array, kosongi bila ingin Json
 	public function get_admin_by_id($id, $return_var = NULL){
-		$data = $this->Default_model->get_data_admin_nopassword($id);
+		$filter = array('username_admin'=> $id);
+		$data = $this->Default_model->get_data_admin($filter);
 		if (empty($data)){
 			$data = [];
+		}else{
+			foreach ($data as &$row){
+				unset($row['password']);
+			}
 		}
 		if ($return_var == true) {
 			return $data;
@@ -220,7 +229,7 @@ class Default_controller extends Loadview {
 		$this->load->helper('cookie');
 		$cookie= array(
 			'name'   => $name,
-			'value'  => str_rot13($value), //Not really encrypt anything, just jumble text :P
+			'value'  => $this->str_rot($value), //jumble text
 			'expire' => $expire
 		);
 		$this->input->set_cookie($cookie);
@@ -233,10 +242,29 @@ class Default_controller extends Loadview {
 	public function get_cookie_decrypt($name){
 		$this->load->helper('cookie');
 		if ($this->input->cookie($name,true)!=NULL) {
-			echo str_rot13($this->input->cookie($name,true));
+			echo $this->str_rot($this->input->cookie($name,true));
 		}else{
 			echo "no cookie";
 		}
+	}
+
+
+	//alternatif pengganti str_rot13. Untuk mengacak teks agar tidak mudah dibaca.
+	//parameter 1: string yang akan di acak
+	//parameter 2: sebanyak berapa posisi huruf berpindah
+	public function str_rot($s, $n = 13) {
+		static $letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$n = (int)$n % 26;
+		if (!$n) return $s;
+		for ($i = 0, $l = strlen($s); $i < $l; $i++) {
+			$c = $s[$i];
+			if ($c >= 'a' && $c <= 'z') {
+				$s[$i] = $letters[(ord($c) - 71 + $n) % 26];
+			} else if ($c >= 'A' && $c <= 'Z') {
+				$s[$i] = $letters[(ord($c) - 39 + $n) % 26 + 26];
+			}
+		}
+		return $s;
 	}
 
 

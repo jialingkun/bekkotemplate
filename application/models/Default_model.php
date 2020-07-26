@@ -6,21 +6,11 @@ class Default_model extends CI_Model {
 	}
 
 	//GET DATABASE
-	public function get_data_admin($id = NULL){
-		$this->db->select('username,password');
+	public function get_data_admin($filter = NULL){
+		$this->db->select('*');
 		$this->db->from('admin');
-		if ($id != NULL){
-			$this->db->where('username',$id);
-		}
-		$query = $this->db->get();
-		return $query->result_array();
-	}
-
-	public function get_data_admin_nopassword($id = NULL){
-		$this->db->select('username');
-		$this->db->from('admin');
-		if ($id != NULL){
-			$this->db->where('username',$id);
+		if ($filter != NULL){
+			$this->db->where($filter);
 		}
 		$query = $this->db->get();
 		return $query->result_array();
