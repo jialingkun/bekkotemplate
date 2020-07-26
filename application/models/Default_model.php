@@ -6,9 +6,9 @@ class Default_model extends CI_Model {
 	}
 
 	//GET DATABASE
-	public function get_data_user($id = NULL){
+	public function get_data_admin($id = NULL){
 		$this->db->select('username,password');
-		$this->db->from('user');
+		$this->db->from('admin');
 		if ($id != NULL){
 			$this->db->where('username',$id);
 		}
@@ -16,9 +16,9 @@ class Default_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function get_data_user_nopassword($id = NULL){
+	public function get_data_admin_nopassword($id = NULL){
 		$this->db->select('username');
-		$this->db->from('user');
+		$this->db->from('admin');
 		if ($id != NULL){
 			$this->db->where('username',$id);
 		}
@@ -28,8 +28,8 @@ class Default_model extends CI_Model {
 
 
 	//INSERT DATABASE
-	public function insert_user($data){
-		$this->db->insert('user', $data);
+	public function insert_admin($data){
+		$this->db->insert('admin', $data);
 		if ($this->db->affected_rows() > 0 ) {
 			$return_message = 'success';
 		}else{
@@ -42,9 +42,9 @@ class Default_model extends CI_Model {
 
 
 	//UPDATE DATABASE
-	public function update_user($id, $data){
+	public function update_admin($id, $data){
 		$this->db->where('username', $id);
-		$this->db->update('user', $data);
+		$this->db->update('admin', $data);
 		if ($this->db->affected_rows() > 0 ) {
 			$return_message = 'success';
 		}else{
@@ -55,9 +55,9 @@ class Default_model extends CI_Model {
 
 
 	//DELETE DATABASE
-	public function delete_user($id){
+	public function delete_admin($id){
 		$this->db->where('username', $id);
-		$this->db->delete('user');
+		$this->db->delete('admin');
 		if ($this->db->affected_rows() > 0 ) {
 			$return_message = 'success';
 		}else{

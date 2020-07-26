@@ -38,12 +38,12 @@
 		var dataString = $("#form").serialize();
 		$("#submit").prop("disabled", true);
 		$.ajax({
-			url: "<?php echo base_url() ?>index.php/cekloginuser",
+			url: "<?php echo base_url() ?>index.php/cekloginadmin",
 			type: 'POST',
 			data: dataString,
 			success: function (response) {
 				if (response == "berhasil login") {
-					window.location.replace("<?php echo base_url() ?>index.php/dashboarduser");
+					window.location.replace("<?php echo base_url() ?>index.php/dashboardadmin");
 				} else {
 					alert(response);
 					$("#submit").prop("disabled", false);

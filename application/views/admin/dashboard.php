@@ -13,12 +13,12 @@
 
 <body>
 	<div>
-	<a href="<?=base_url("index.php/logoutuser");?>" class="btn btn-default btn-flat">Sign out</a>
+	<a href="<?=base_url("index.php/logoutadmin");?>" class="btn btn-default btn-flat">Sign out</a>
 	</div>
-	<div>Current User:</div>
-	<div><b><span id="currentuser"></span></b></div>
-	<div>List User:</div>
-	<div id="listuser"></div>	
+	<div>Current Admin:</div>
+	<div><b><span id="currentadmin"></span></b></div>
+	<div>List Admin:</div>
+	<div id="listadmin"></div>	
 
 </body>
 <script src="<?=base_url("dist/js/jquery.min.js");?>"></script>
@@ -33,17 +33,17 @@
 	// 	alert('cookie created');
 	// });
 
-	getLoginCookie('userCookie', function(response){
-		$("#currentuser").html(response);
+	getLoginCookie('adminCookie', function(response){
+		$("#currentadmin").html(response);
 	});
 
 
 	$.ajax({
-		url: "<?php echo base_url() ?>index.php/get_all_user",
+		url: "<?php echo base_url() ?>index.php/get_all_admin",
 		dataType: 'json',
 		success: function (response) {
 			for (var i = 0; i < response.length; i++) {
-				$("#listuser").append("<div><b>"+response[i].username+"</b></div>");
+				$("#listadmin").append("<div><b>"+response[i].username+"</b></div>");
 			}
 		},
 		error: function (xhr, status, error) {

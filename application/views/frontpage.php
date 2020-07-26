@@ -11,7 +11,7 @@
 </head>
 
 <body>
-	<a href="<?php echo base_url() ?>index.php/login">LOGIN USER</a>
+	<a href="<?php echo base_url() ?>index.php/login">LOGIN ADMIN</a>
 </body>
 <script src="<?=base_url("dist/js/jquery.min.js");?>"></script>
 <script src="<?=base_url("dist/js/popper.min.js");?>"></script>
