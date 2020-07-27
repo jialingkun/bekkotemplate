@@ -230,7 +230,7 @@ class Default_controller extends Loadview {
 		$this->load->helper('cookie');
 		$cookie= array(
 			'name'   => $name,
-			'value'  => $this->str_rot($value), //jumble text
+			'value'  => $this->str_rot($value), //jumble text encoding
 			'expire' => $expire
 		);
 		$this->input->set_cookie($cookie);
@@ -253,16 +253,21 @@ class Default_controller extends Loadview {
 	//alternatif pengganti str_rot13. Untuk mengacak teks agar tidak mudah dibaca.
 	//parameter 1: string yang akan di acak
 	//parameter 2: sebanyak berapa posisi huruf berpindah
-	public function str_rot($s, $n = 13) {
-		static $letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$n = (int)$n % 26;
-		if (!$n) return $s;
+	//parameter 2: sebanyak berapa posisi digit berpindah
+	public function str_rot($s, $nletter = 13, $ndiggit = 5) {
+		static $letterslower = 'abcdefghijklmnopqrstuvwxyz';
+		static $lettersupper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		static $digits = '0123456789';
+		$nletter = (int)$nletter % 26;
+		$ndiggit = (int)$ndiggit % 10;
 		for ($i = 0, $l = strlen($s); $i < $l; $i++) {
 			$c = $s[$i];
 			if ($c >= 'a' && $c <= 'z') {
-				$s[$i] = $letters[(ord($c) - 71 + $n) % 26];
+				$s[$i] = $letterslower[(ord($c) - 71 + $nletter) % 26];
 			} else if ($c >= 'A' && $c <= 'Z') {
-				$s[$i] = $letters[(ord($c) - 39 + $n) % 26 + 26];
+				$s[$i] = $lettersupper[(ord($c) - 39 + $nletter) % 26];
+			} else if ($c >= '0' && $c <= '9') {
+				$s[$i] = $digits[(ord($c) - 38 + $ndiggit) % 10];
 			}
 		}
 		return $s;
