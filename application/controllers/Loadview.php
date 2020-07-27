@@ -7,7 +7,7 @@ class Loadview extends CI_Controller {
 	}
 
 	//login
-	public function login(){
+	public function loginadmin(){
 		$this->load->view('admin/login');
 	}
 
@@ -16,7 +16,7 @@ class Loadview extends CI_Controller {
 		if ($this->checkcookieadmin()) {
 			$this->load->view('admin/dashboard');
 		}else{
-			header("Location: ".base_url()."index.php/login");
+			header("Location: ".base_url()."index.php/loginadmin");
 			die();
 		}
 	}

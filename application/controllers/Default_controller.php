@@ -167,7 +167,7 @@ class Default_controller extends Loadview {
 	public function logoutadmin(){
 		$this->load->helper('cookie');
 		delete_cookie("adminCookie");
-		header("Location: ".base_url()."index.php/login");
+		header("Location: ".base_url()."index.php/loginadmin");
 		die();
 	}
 
