@@ -37,7 +37,7 @@ class Default_controller extends Loadview {
 	//parameter 1: username
 	//parameter 1: true bila ingin return array, kosongi bila ingin Json
 	public function get_admin_by_id($id, $return_var = NULL){
-		$filter = array('username_admin'=> $id);
+		$filter = array('username'=> $id);
 		$data = $this->Default_model->get_data_admin($filter);
 		if (empty($data)){
 			$data = [];

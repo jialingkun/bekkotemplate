@@ -16,14 +16,28 @@ class Default_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function get_count_admin($filter = NULL){
+		$this->db->from('admin');
+		if ($filter != NULL){
+			$this->db->where($filter);
+		}
+		$count = $this->db->count_all_results();
+		return $count;
+	}
+
 
 	//INSERT DATABASE
 	public function insert_admin($data){
-		$this->db->insert('admin', $data);
-		if ($this->db->affected_rows() > 0 ) {
-			$return_message = 'success';
+		$filter = array('username'=> $data['username']);
+		if ($this->get_count_admin($filter)==0) {
+			$this->db->insert('admin', $data);
+			if ($this->db->affected_rows() > 0 ) {
+				$return_message = 'success';
+			}else{
+				$return_message = 'failed';
+			}
 		}else{
-			$return_message = 'failed';
+			$return_message = 'id already exist';
 		}
 		return $return_message;
 	}

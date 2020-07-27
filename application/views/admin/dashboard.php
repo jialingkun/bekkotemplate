@@ -13,12 +13,24 @@
 
 <body>
 	<div>
-	<a href="<?=base_url("index.php/logoutadmin");?>" class="btn btn-default btn-flat">Sign out</a>
+		<a href="<?=base_url("index.php/logoutadmin");?>" class="btn btn-default btn-flat">Sign out</a>
 	</div>
 	<div>Current Admin:</div>
 	<div><b><span id="currentadmin"></span></b></div>
 	<div>List Admin:</div>
-	<div id="listadmin"></div>	
+	<div id="listadmin"></div>
+	<div>Add Admin:</div>
+	<form id="form" method="POST">
+		<div class="form-group">
+			<label for="usr">Username</label>
+			<input type="text" class="form-control" name="username">
+		</div>
+		<div class="form-group">
+			<label for="usr">Password</label>
+			<input type="password" class="form-control" name="password">
+		</div>
+		<button id="submit" type="submit" class="btn btn-primary center-item">Add</button>
+	</form>
 
 </body>
 <script src="<?=base_url("dist/js/jquery.min.js");?>"></script>
@@ -38,17 +50,47 @@
 	});
 
 
-	$.ajax({
-		url: "<?php echo base_url() ?>index.php/get_all_admin",
-		dataType: 'json',
-		success: function (response) {
-			for (var i = 0; i < response.length; i++) {
-				$("#listadmin").append("<div><b>"+response[i].username+"</b></div>");
+	function refreshlist(){
+		$.ajax({
+			url: "<?php echo base_url() ?>index.php/get_all_admin",
+			dataType: 'json',
+			success: function (response) {
+				$("#listadmin").empty();
+				for (var i = 0; i < response.length; i++) {
+					$("#listadmin").append("<div><b>"+response[i].username+"</b></div>");
+				}
+			},
+			error: function (xhr, status, error) {
+				alert(status + '- ' + xhr.status + ': ' + xhr.statusText);
 			}
-		},
-		error: function (xhr, status, error) {
-			alert(status + '- ' + xhr.status + ': ' + xhr.statusText);
-		}
+		});
+	}
+
+	refreshlist();
+
+
+
+	$(document).on('submit', '#form', function (event) {
+		event.preventDefault();
+		var dataString = $("#form").serialize();
+		$("#submit").prop("disabled", true);
+		$.ajax({
+			url: "<?php echo base_url() ?>index.php/insert_admin",
+			type: 'POST',
+			data: dataString,
+			success: function (response) {
+				if (response == "success") {
+					refreshlist();
+				} else {
+					alert(response);
+				}
+				$("#submit").prop("disabled", false);
+			},
+			error: function (xhr, status, error) {
+				alert(status + '- ' + xhr.status + ': ' + xhr.statusText);
+				$("#submit").prop("disabled", false);
+			}
+		});
 	});
 
 
