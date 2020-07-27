@@ -134,7 +134,8 @@ class Default_controller extends Loadview {
 	public function cekloginadmin(){
 		$username = $this->input->post('username');
 		$password = md5($this->input->post('password'));
-		$data = $this->Default_model->get_data_admin();
+		$filter = array('username'=> $username);
+		$data = $this->Default_model->get_data_admin($filter);
 		$is_login = false;
 		foreach ($data as $row){
 			if ($username == $row['username'] && $password == $row['password']) {
