@@ -37,7 +37,7 @@ class Default_model extends CI_Model {
 				$return_message = 'failed';
 			}
 		}else{
-			$return_message = 'id already exist';
+			$return_message = 'already exist';
 		}
 		return $return_message;
 	}
