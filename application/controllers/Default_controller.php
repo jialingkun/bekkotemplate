@@ -230,7 +230,7 @@ class Default_controller extends Loadview {
 		$this->load->helper('cookie');
 		$cookie= array(
 			'name'   => $name,
-			'value'  => $this->str_rot($value), //jumble text encoding
+			'value'  => $this->str_rot($value), //custom encoding
 			'expire' => $expire
 		);
 		$this->input->set_cookie($cookie);
@@ -250,10 +250,11 @@ class Default_controller extends Loadview {
 	}
 
 
-	//alternatif pengganti str_rot13. Untuk mengacak teks agar tidak mudah dibaca.
+	//Untuk mengacak teks agar tidak mudah dibaca.
+	//note: alternatif pengganti str_rot13 dan base64decode karena beberapa server melarang fungsi tersebut.
 	//parameter 1: string yang akan di acak
 	//parameter 2: sebanyak berapa posisi huruf berpindah
-	//parameter 2: sebanyak berapa posisi digit berpindah
+	//parameter 3: sebanyak berapa posisi digit berpindah
 	public function str_rot($s, $nletter = 13, $ndiggit = 5) {
 		static $letterslower = 'abcdefghijklmnopqrstuvwxyz';
 		static $lettersupper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
