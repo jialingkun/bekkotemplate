@@ -157,7 +157,12 @@ class Default_controller extends Loadview {
 	public function checkcookieadmin(){
 		$this->load->helper('cookie');
 		if ($this->input->cookie('adminCookie',true)!=NULL) {
-			return true;
+			$value = $this->str_rot($this->input->cookie('adminCookie',true)); //decrypt first
+			if (empty($this->get_admin_by_id($value,true))) {
+				return false;
+			}else{
+				return true;
+			}
 		}else{
 			return false;
 		}
