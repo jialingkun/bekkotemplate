@@ -69,5 +69,26 @@ class Default_model extends CI_Model {
 		}
 		return $return_message;
 	}
+
+
+
+	//OTHER
+	//Insert or Update
+	public function insertOrUpdate($table, $data) {
+		if (empty($table) || empty($data)) return false;
+		$duplicate_data = array();
+		foreach($data AS $key => $value) {
+			$duplicate_data[] = sprintf("%s='%s'", $key, $value);
+		}
+
+		$sql = sprintf("%s ON DUPLICATE KEY UPDATE %s", $this->db->insert_string($table, $data), implode(',', $duplicate_data));
+		$this->db->query($sql);
+		if ($this->db->affected_rows() > 0 ) {
+			$return_message = 'success';
+		}else{
+			$return_message = 'failed';
+		}
+		return $return_message;
+	}
 	
 }
