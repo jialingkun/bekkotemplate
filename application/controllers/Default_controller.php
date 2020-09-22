@@ -53,6 +53,21 @@ class Default_controller extends Loadview {
 		}
 	}
 
+
+
+	//ambil data error log (developer only)
+	public function get_error_log($orderby = NULL, $sort = "asc", $limit = NULL, $return_var = NULL){
+		$data = $this->Default_model->get_data_error_log($orderby, $sort, $limit);
+		if (empty($data)){
+			$data = [];
+		}
+		if ($return_var == true) {
+			return $data;
+		}else{
+			echo json_encode($data);
+		}
+	}
+
 	
 
 	//INSERT
@@ -72,6 +87,20 @@ class Default_controller extends Loadview {
 		}else{
 			echo "access denied";
 		}
+	}
+
+	//Tambah data error log
+	//input: form POST seperti di bawah
+	//output: success/failed
+	public function insert_error_log($log = NULL){
+		if (!empty($this->input->post('log'))) {
+			$log = $this->input->post('log');
+		}
+		$data = array(
+			'value' => $log
+		);
+		$insertStatus = $this->Default_model->insert_error_log($data);
+		// echo $insertStatus;
 	}
 	
 

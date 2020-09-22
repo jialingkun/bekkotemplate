@@ -25,6 +25,19 @@ class Default_model extends CI_Model {
 		return $count;
 	}
 
+	public function get_data_error_log($orderby = NULL, $sort = "asc", $limit = NULL){
+		$this->db->select('*');
+		$this->db->from('error_log');
+		if ($orderby != NULL) {
+			$this->db->order_by($orderby, $sort);
+		}
+		if ($limit != NULL) {
+			$this->db->limit($limit);
+		}
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 
 	//INSERT DATABASE
 	public function insert_admin($data){
@@ -38,6 +51,16 @@ class Default_model extends CI_Model {
 			}
 		}else{
 			$return_message = 'already exist';
+		}
+		return $return_message;
+	}
+
+	public function insert_error_log($data){
+		$this->db->insert('error_log', $data);
+		if ($this->db->affected_rows() > 0 ) {
+			$return_message = 'success';
+		}else{
+			$return_message = 'failed';
 		}
 		return $return_message;
 	}

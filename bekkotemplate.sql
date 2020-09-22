@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2020 at 06:23 AM
+-- Generation Time: Sep 22, 2020 at 05:03 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.32
 
@@ -43,6 +43,17 @@ INSERT INTO `admin` (`username`, `password`) VALUES
 ('benny', 'd01393436e02c4c5078bd5d4a9808182'),
 ('yoko', 'd01393436e02c4c5078bd5d4a9808182');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `error_log`
+--
+
+CREATE TABLE `error_log` (
+  `id_log` datetime NOT NULL,
+  `value` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 --
 -- Indexes for dumped tables
 --
@@ -52,6 +63,12 @@ INSERT INTO `admin` (`username`, `password`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `error_log`
+--
+ALTER TABLE `error_log`
+  ADD PRIMARY KEY (`id_log`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
