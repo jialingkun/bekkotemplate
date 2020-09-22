@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2020 at 05:03 AM
+-- Generation Time: Sep 22, 2020 at 10:22 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.32
 
@@ -50,7 +50,7 @@ INSERT INTO `admin` (`username`, `password`) VALUES
 --
 
 CREATE TABLE `error_log` (
-  `id_log` datetime NOT NULL,
+  `id_log` datetime NOT NULL DEFAULT current_timestamp(),
   `value` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
