@@ -20,7 +20,7 @@
 	<div>List Admin:</div>
 	<div id="listadmin"></div>
 	<div>Add Admin:</div>
-	<form id="form" method="POST">
+	<form id="form" onsubmit="submitform(event)">
 		<div class="form-group">
 			<label for="usr">Username</label>
 			<input type="text" class="form-control" name="username">
@@ -70,7 +70,7 @@
 
 
 
-	$(document).on('submit', '#form', function (event) {
+	function submitform(event) {
 		event.preventDefault();
 		var dataString = $("#form").serialize();
 		$("#submit").prop("disabled", true);
@@ -91,7 +91,7 @@
 				$("#submit").prop("disabled", false);
 			}
 		});
-	});
+	}
 
 
 </script>

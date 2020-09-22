@@ -15,14 +15,14 @@
 	<div class="container">
 		<h2 class="text-center"><small>Login</small></h2>
 		<p class="text-center grey-text"><small>As Admin</small></p>
-		<form id="form" method="POST">
+		<form id="form" method="POST" onsubmit="submitform(event)">
 			<div class="form-group">
 				<label for="usr">Username:</label>
-				<input type="text" class="form-control" name="username">
+				<input type="text" class="form-control" name="username" required>
 			</div>
 			<div class="form-group">
 				<label for="usr">Password:</label>
-				<input type="password" class="form-control" name="password">
+				<input type="password" class="form-control" name="password" required>
 			</div>
 			<button id="submit" type="submit" class="btn btn-primary center-item">Sign In</button>
 		</form>
@@ -33,7 +33,7 @@
 <script src="<?=base_url("dist/js/bootstrap.min.js");?>"></script>
 
 <script>
-	$(document).on('submit', '#form', function (event) {
+	function submitform(event) {
 		event.preventDefault();
 		var dataString = $("#form").serialize();
 		$("#submit").prop("disabled", true);
@@ -54,7 +54,7 @@
 				$("#submit").prop("disabled", false);
 			}
 		});
-	});
+	}
 
 </script>
 
