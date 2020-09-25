@@ -309,4 +309,10 @@ class Default_controller extends Loadview {
 	}
 
 
+
+	public function testing(){
+		echo $this->Default_model->get_count_admin();
+	}
+
+
 }

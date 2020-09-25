@@ -17,12 +17,14 @@ class Default_model extends CI_Model {
 	}
 
 	public function get_count_admin($filter = NULL){
+		$this->db->select('COUNT(*) as counter');
 		$this->db->from('admin');
 		if ($filter != NULL){
 			$this->db->where($filter);
 		}
-		$count = $this->db->count_all_results();
-		return $count;
+		$query = $this->db->get();
+		$data = $query->result_array();
+		return $data[0]['counter'];
 	}
 
 	public function get_data_error_log($orderby = NULL, $sort = "asc", $limit = NULL){
