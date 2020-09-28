@@ -103,7 +103,12 @@ class Default_model extends CI_Model {
 		if (empty($table) || empty($data)) return false;
 		$duplicate_data = array();
 		foreach($data AS $key => $value) {
-			$duplicate_data[] = sprintf("%s='%s'", $key, $value);
+			if ($value!=NULL) {
+				$duplicate_data[] = sprintf("%s='%s'", $key, $value);
+			}else{
+				$duplicate_data[] = sprintf("%s=NULL", $key);
+			}
+			
 		}
 
 		$sql = sprintf("%s ON DUPLICATE KEY UPDATE %s", $this->db->insert_string($table, $data), implode(',', $duplicate_data));
