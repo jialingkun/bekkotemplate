@@ -79,8 +79,8 @@ class Default_controller extends Loadview {
 	public function insert_admin(){
 		if ($this->checkcookieadmin()) {
 			$data = array(
-				'username' => $this->input->post('username'),
-				'password' => md5($this->input->post('password'))
+				'username' => $this->input->post('username',true),
+				'password' => md5($this->input->post('password',true))
 			);
 			$insertStatus = $this->Default_model->insert_admin($data);
 			echo $insertStatus;
@@ -113,8 +113,8 @@ class Default_controller extends Loadview {
 	//output: success/failed/id not found/wrong old password/access denied
 	public function update_password_admin($id){
 		if ($this->checkcookieadmin()) {
-			$oldpassword = md5($this->input->post('oldpassword'));
-			$newpassword = md5($this->input->post('newpassword'));
+			$oldpassword = md5($this->input->post('oldpassword',true));
+			$newpassword = md5($this->input->post('newpassword',true));
 			$filter = array('username'=> $id);
 			$data = $this->Default_model->get_data_admin($filter);
 			if (empty($data)){
@@ -161,8 +161,8 @@ class Default_controller extends Loadview {
 	//input: form POST seperti di bawah
 	//Output: berhasil login / gagal login
 	public function cekloginadmin(){
-		$username = $this->input->post('username');
-		$password = md5($this->input->post('password'));
+		$username = $this->input->post('username',true);
+		$password = md5($this->input->post('password',true));
 		$filter = array('username'=> $username);
 		$data = $this->Default_model->get_data_admin($filter);
 		$is_login = false;
@@ -214,10 +214,10 @@ class Default_controller extends Loadview {
 	//output: -
 	public function create_cookie($name = NULL, $value = NULL, $expire = NULL){
 		if ($name == NULL) {
-			$name = $this->input->post('name');
+			$name = $this->input->post('name',true);
 		}
 		if ($value == NULL) {
-			$value = $this->input->post('value');
+			$value = $this->input->post('value',true);
 		}
 		if ($expire == NULL) {
 			$expire = 0;
@@ -253,10 +253,10 @@ class Default_controller extends Loadview {
 	//output: -
 	public function create_cookie_encrypt($name = NULL, $value = NULL, $expire = NULL){
 		if ($name == NULL) {
-			$name = $this->input->post('name');
+			$name = $this->input->post('name',true);
 		}
 		if ($value == NULL) {
-			$value = $this->input->post('value');
+			$value = $this->input->post('value',true);
 		}
 		if ($expire == NULL) {
 			$expire = 0;
