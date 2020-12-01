@@ -80,7 +80,7 @@ class Default_controller extends Loadview {
 		if ($this->checkcookieadmin()) {
 			$data = array(
 				'username' => $this->input->post('username',true),
-				'password' => md5($this->input->post('password',true))
+				'password' => $this->openssl('encrypt',$this->input->post('password',true))
 			);
 			$insertStatus = $this->Default_model->insert_admin($data);
 			echo $insertStatus;
@@ -113,8 +113,8 @@ class Default_controller extends Loadview {
 	//output: success/failed/id not found/wrong old password/access denied
 	public function update_password_admin($id){
 		if ($this->checkcookieadmin()) {
-			$oldpassword = md5($this->input->post('oldpassword',true));
-			$newpassword = md5($this->input->post('newpassword',true));
+			$oldpassword = $this->openssl('encrypt',$this->input->post('oldpassword',true));
+			$newpassword = $this->openssl('encrypt',$this->input->post('newpassword',true));
 			$filter = array('username'=> $id);
 			$data = $this->Default_model->get_data_admin($filter);
 			if (empty($data)){
@@ -162,7 +162,7 @@ class Default_controller extends Loadview {
 	//Output: berhasil login / gagal login
 	public function cekloginadmin(){
 		$username = $this->input->post('username',true);
-		$password = md5($this->input->post('password',true));
+		$password = $this->openssl('encrypt',$this->input->post('password',true));
 		$filter = array('username'=> $username);
 		$data = $this->Default_model->get_data_admin($filter);
 		$is_login = false;
@@ -186,8 +186,8 @@ class Default_controller extends Loadview {
 	public function checkcookieadmin(){
 		$this->load->helper('cookie');
 		if ($this->input->cookie('adminCookie',true)!=NULL) {
-			$value = $this->str_rot($this->input->cookie('adminCookie',true)); //decrypt first
-			if (empty($this->get_admin_by_id($value,true))) {
+			$value = $this->openssl('decrypt',$this->input->cookie('adminCookie',true)); //decrypt first
+			if (empty($value) || empty($this->get_admin_by_id($value,true))) {
 				return false;
 			}else{
 				return true;
@@ -264,7 +264,7 @@ class Default_controller extends Loadview {
 		$this->load->helper('cookie');
 		$cookie= array(
 			'name'   => $name,
-			'value'  => $this->str_rot($value), //custom encoding
+			'value'  => $this->openssl('encrypt',$value), //custom encoding
 			'expire' => $expire
 		);
 		$this->input->set_cookie($cookie);
@@ -277,10 +277,29 @@ class Default_controller extends Loadview {
 	public function get_cookie_decrypt($name){
 		$this->load->helper('cookie');
 		if ($this->input->cookie($name,true)!=NULL) {
-			echo $this->str_rot($this->input->cookie($name,true));
+			echo $this->openssl('decrypt',$this->input->cookie($name,true));
 		}else{
 			echo "no cookie";
 		}
+	}
+
+
+	//Untuk encrypt dan decrypt string dengan key yang sudah ditentukan.
+	//parameter 1: encrypt/decrypt
+	//parameter 2: string yang mau di encrypt/decrypt
+	public function openssl($action, $string) {
+		$output = false;
+		$encrypt_method = "AES-256-CBC";
+		$secret_key = 'qwer@1234';
+		$secret_iv = 'masteriv';
+		$key = hash('sha256', $secret_key);
+		$iv = substr(hash('sha256', $secret_iv), 0, 16);
+		if ( $action == 'encrypt' ) {
+			$output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+		} else if( $action == 'decrypt' ) {
+			$output = openssl_decrypt($string, $encrypt_method, $key, 0, $iv);
+		}
+		return $output;
 	}
 
 
