@@ -13,7 +13,7 @@
 
 <body>
 	<div>
-		<a href="<?=base_url("index.php/logoutadmin");?>" class="btn btn-default btn-flat">Sign out</a>
+		<a href="<?=base_url("index.php/admin/logoutadmin");?>" class="btn btn-default btn-flat">Sign out</a>
 	</div>
 	<div>Current Admin:</div>
 	<div><b><span id="currentadmin"></span></b></div>
@@ -52,7 +52,7 @@
 
 	function refreshlist(){
 		$.ajax({
-			url: "<?php echo base_url() ?>index.php/get_all_admin",
+			url: "<?php echo base_url() ?>index.php/admin/get_all_admin",
 			dataType: 'json',
 			success: function (response) {
 				$("#listadmin").empty();
@@ -75,7 +75,7 @@
 		var dataString = $("#form").serialize();
 		$("#submit").prop("disabled", true);
 		$.ajax({
-			url: "<?php echo base_url() ?>index.php/insert_admin",
+			url: "<?php echo base_url() ?>index.php/admin/insert_admin",
 			type: 'POST',
 			data: dataString,
 			success: function (response) {
