@@ -56,7 +56,10 @@
 			<h5 id="loadingtext" class="loader-text text-center">Mohon tunggu beberapa menit</h5>
 		</div>
 	</div>
+
+
 	<div class="container">
+
 		<div class="row">
 			<div class="col-sm-4">
 				<h2 class="text-center"><small>Submit with loading</small></h2>
@@ -74,6 +77,9 @@
 			</div>
 
 
+
+
+
 			<div class="col-sm-4">
 				<h2 class="text-center"><small>Submit with status progress</small></h2>
 				<form id="formstatus" onsubmit="formsubmitstatus(event)">
@@ -88,6 +94,11 @@
 					<button id="submitstatus" type="submit" class="btn btn-primary center-item">Submit</button>
 				</form>
 			</div> 
+
+
+
+
+			
 
 			<div class="col-sm-4">
 				<h2 class="text-center"><small>Submit with upload progress</small></h2>

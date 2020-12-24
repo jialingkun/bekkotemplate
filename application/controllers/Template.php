@@ -50,7 +50,7 @@ class Template extends Main {
 
 	public function submit_upload(){
 		$config['upload_path']          = './uploads/';
-		$config['allowed_types']        = 'gif|jpg|png';
+		$config['allowed_types']        = 'gif|jpg|png|pdf';
 
 		$this->load->library('upload', $config);
 		if (!$this->upload->do_upload('userfile')){
