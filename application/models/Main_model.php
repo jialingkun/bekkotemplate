@@ -67,7 +67,7 @@ class Main_model extends CI_Model {
 		return $return_message;
 	}
 
-	public function CustomUpdate($table, $columnid, $id, $data){
+	public function customUpdate($table, $columnid, $id, $data){
 		$this->db->where($columnid, $id);
 		$this->db->update($table, $data);
 		if ($this->db->affected_rows() > 0 ) {
@@ -80,11 +80,34 @@ class Main_model extends CI_Model {
 
 
 
-
-
-
-
-	//DOCUMENTATION BY FEATURE
+	//filter: array
+	//orderby: 'title DESC, name ASC'
+	//groupby: string or array
+	//select: 'title, content, date'
+	//limit: int
+	//limitoffset: int
+	public function customGet($table, $filter = NULL, $orderby = NULL, $groupby = NULL, $select = NULL, $limit = NULL, $limitoffset = 0){
+		if ($select != NULL){
+			$this->db->select($select);
+		}else{
+			$this->db->select('*');
+		}
+		$this->db->from($table);
+		if ($filter != NULL){
+			$this->db->where($filter);
+		}
+		if ($orderby != NULL) {
+			$this->db->order_by($orderby);
+		}
+		if ($groupby != NULL) {
+			$this->db->group_by($groupby);
+		}
+		if ($limit != NULL) {
+			$this->db->limit($limit,$limitoffset);
+		}
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 
 	
 	

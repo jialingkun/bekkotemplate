@@ -1,7 +1,7 @@
 <script>
   function setCookie(cname, cvalue, callback){
     $.ajax({
-      url: "<?php echo base_url() ?>index.php/main/create_cookie",
+      url: "<?php echo base_url() ?>main/create_cookie",
       type: 'POST',
       data: {name: cname, value: cvalue},
       success: function (response) {
@@ -15,7 +15,7 @@
 
   function getCookie(cname, callback) {
     $.ajax({
-      url: "<?php echo base_url() ?>index.php/main/get_cookie/" + cname,
+      url: "<?php echo base_url() ?>main/get_cookie/" + cname,
       dataType: 'text',
       success: function (response) {
         callback(response);
@@ -28,7 +28,7 @@
 
   function getLoginCookie(cname, callback) {
     $.ajax({
-      url: "<?php echo base_url() ?>index.php/main/get_cookie_decrypt/" + cname,
+      url: "<?php echo base_url() ?>main/get_cookie_decrypt/" + cname,
       dataType: 'text',
       success: function (response) {
         callback(response);

@@ -38,16 +38,16 @@
 		var dataString = $("#form").serialize();
 		$("#submit").prop("disabled", true);
 		$.ajax({
-			url: "<?php echo base_url() ?>index.php/admin/cekloginadmin",
+			url: "<?php echo base_url() ?>admin/cekloginadmin",
 			type: 'POST',
 			data: dataString,
 			success: function (response) {
 				if (response == "berhasil login") {
-					window.location.replace("<?php echo base_url() ?>index.php/admin/dashboardadmin");
+					window.location.replace("<?php echo base_url() ?>admin/dashboardadmin");
 				} else {
 					alert(response);
-					$("#submit").prop("disabled", false);
 				}
+				$("#submit").prop("disabled", false);
 			},
 			error: function (xhr, status, error) {
 				alert(status + '- ' + xhr.status + ': ' + xhr.statusText);

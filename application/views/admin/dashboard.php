@@ -12,26 +12,27 @@
 </head>
 
 <body>
-	<div>
-		<a href="<?=base_url("index.php/admin/logoutadmin");?>" class="btn btn-default btn-flat">Sign out</a>
+	<div class="container">
+		<div>
+			<a href="<?=base_url("admin/logoutadmin");?>" class="btn btn-default btn-flat">Sign out</a>
+		</div>
+		<div>Current Admin:</div>
+		<div><b><span id="currentadmin"></span></b></div>
+		<div>List Admin:</div>
+		<div id="listadmin"></div>
+		<div>Add Admin:</div>
+		<form id="form" onsubmit="submitform(event)">
+			<div class="form-group">
+				<label for="usr">Username</label>
+				<input type="text" class="form-control" name="username">
+			</div>
+			<div class="form-group">
+				<label for="usr">Password</label>
+				<input type="password" class="form-control" name="password">
+			</div>
+			<button id="submit" type="submit" class="btn btn-primary center-item">Add</button>
+		</form>
 	</div>
-	<div>Current Admin:</div>
-	<div><b><span id="currentadmin"></span></b></div>
-	<div>List Admin:</div>
-	<div id="listadmin"></div>
-	<div>Add Admin:</div>
-	<form id="form" onsubmit="submitform(event)">
-		<div class="form-group">
-			<label for="usr">Username</label>
-			<input type="text" class="form-control" name="username">
-		</div>
-		<div class="form-group">
-			<label for="usr">Password</label>
-			<input type="password" class="form-control" name="password">
-		</div>
-		<button id="submit" type="submit" class="btn btn-primary center-item">Add</button>
-	</form>
-
 </body>
 <script src="<?=base_url("dist/js/jquery.min.js");?>"></script>
 <script src="<?=base_url("dist/js/popper.min.js");?>"></script>
@@ -52,7 +53,7 @@
 
 	function refreshlist(){
 		$.ajax({
-			url: "<?php echo base_url() ?>index.php/admin/get_all_admin",
+			url: "<?php echo base_url() ?>admin/get_all_admin",
 			dataType: 'json',
 			success: function (response) {
 				$("#listadmin").empty();
@@ -75,7 +76,7 @@
 		var dataString = $("#form").serialize();
 		$("#submit").prop("disabled", true);
 		$.ajax({
-			url: "<?php echo base_url() ?>index.php/admin/insert_admin",
+			url: "<?php echo base_url() ?>admin/insert_admin",
 			type: 'POST',
 			data: dataString,
 			success: function (response) {
