@@ -108,7 +108,8 @@ class Main extends CI_Controller {
 		$cookie= array(
 			'name'   => $name,
 			'value'  => $this->openssl('encrypt',$value), //custom encoding
-			'expire' => $expire
+			'expire' => $expire,
+			'path'	 => "/"
 		);
 		$this->input->set_cookie($cookie);
 		// echo "cookie created";
